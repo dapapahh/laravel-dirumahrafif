@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
-class Section extends Model
+class partner extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','slug','thumbnail','content','post_as'];
+    protected $fillable = ['title', 'thumbnail', 'content', 'link'];
 
-    protected static function boot()
-    {
+    protected static function boot ()
+     {
         parent::boot();
         static::updating(function ($model) {
             if ($model->isDirty('thumbnail') && ($model->getOriginal('thumbnail') !==null)) {
@@ -20,5 +19,5 @@ class Section extends Model
             }
         });
     }
-
 }
+

@@ -7,12 +7,15 @@ use App\Filament\Resources\SectionResource\RelationManagers;
 use App\Models\Section;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
+use Filament\Notifications\Collection;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class SectionResource extends Resource
 {
@@ -59,7 +62,14 @@ class SectionResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()->after(function (EloquentCollection $records)
+                {
+                foreach($records as $key => $value){
+                    if($value->thumbnail){
+                        Storage::disk('public')->delete($value->thumbnail);
+                    }
+                }    
+                } ),
             ]);
     }
     

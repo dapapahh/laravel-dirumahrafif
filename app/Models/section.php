@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class section extends Model
+class Section extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','slug','thumbhnail','content','post_as'];
+    protected $fillable = ['title','slug','thumbnail','content','post_as'];
 }

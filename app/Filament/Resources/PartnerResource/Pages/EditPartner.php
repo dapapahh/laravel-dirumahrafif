@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\PartnerResource\Pages;
 
-use App\Filament\Resources\PartnerResource;
+use App\Models\partner;
 use Filament\Pages\Actions;
+use Illuminate\Support\Facades\Storage;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\PartnerResource;
 
 class EditPartner extends EditRecord
 {
@@ -13,7 +15,14 @@ class EditPartner extends EditRecord
     protected function getActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->after(
+                function(partner $record){
+                    if($record->thumbnail){
+                        Storage::disk('public')->delete($record->thumbnail);
+                    }
+
+                }
+            ),
         ];
     }
 }

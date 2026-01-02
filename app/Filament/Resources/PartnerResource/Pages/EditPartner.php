@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\SectionResource\Pages;
+namespace App\Filament\Resources\PartnerResource\Pages;
 
-use App\Filament\Resources\SectionResource;
-use App\Models\Section;
+use App\Models\partner;
 use Filament\Pages\Actions;
-use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Storage;
+use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\PartnerResource;
 
-class EditSection extends EditRecord
+class EditPartner extends EditRecord
 {
-    protected static string $resource = SectionResource::class;
+    protected static string $resource = PartnerResource::class;
 
     protected function getActions(): array
     {
         return [
             Actions\DeleteAction::make()->after(
-                function(Section $record){
+                function(partner $record){
                     if($record->thumbnail){
                         Storage::disk('public')->delete($record->thumbnail);
                     }

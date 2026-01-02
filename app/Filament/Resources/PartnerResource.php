@@ -2,26 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SectionResource\Pages;
-use App\Filament\Resources\SectionResource\RelationManagers;
-use App\Models\Section;
 use Filament\Forms;
-use Filament\Forms\Components\Card;
-use Filament\Notifications\Collection;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Partner;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use App\Filament\Resources\PartnerResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PartnerResource\RelationManagers;
 
-class SectionResource extends Resource
+class PartnerResource extends Resource
 {
-    protected static ?string $model = Section::class;
+    protected static ?string $model = Partner::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bookmark-alt';
+    protected static ?string $navigationIcon = 'heroicon-o-external-link';
 
     public static function form(Form $form): Form
     {
@@ -37,10 +36,11 @@ class SectionResource extends Resource
                         ->required()->image()->disk('public'),
                     Forms\Components\RichEditor::make('content')
                         ->required(),
-                    Forms\Components\Select::make('post_as')->options([
-                        'JUMBOTRON'=>'JUMBOTRON',
-                        'ABOUT'=>'ABOUT'
-                    ])
+                    Forms\Components\TextInput::make('link')
+                        ->required()
+                        ->maxLength(255),
+        
+                    
                 ])
             ]);
     }
@@ -51,7 +51,7 @@ class SectionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')->sortable()->searchable(),
                 Tables\Columns\ImageColumn::make('thumbnail'),
-                Tables\Columns\TextColumn::make('post_as')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('link')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
             ])
@@ -62,7 +62,7 @@ class SectionResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make()->after(function (EloquentCollection $records)
+                Tables\Actions\DeleteBulkAction::make()->after(function (Collection $records)
                 {
                 foreach($records as $key => $value){
                     if($value->thumbnail){
@@ -83,9 +83,9 @@ class SectionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSections::route('/'),
-            'create' => Pages\CreateSection::route('/create'),
-            'edit' => Pages\EditSection::route('/{record}/edit'),
+            'index' => Pages\ListPartners::route('/'),
+            'create' => Pages\CreatePartner::route('/create'),
+            'edit' => Pages\EditPartner::route('/{record}/edit'),
         ];
     }    
 }

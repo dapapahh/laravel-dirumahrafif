@@ -1,5 +1,16 @@
 @php
-$site_name = get_setting_value('_site_name')
+$sitename = get_setting_value('_sitename');
+  $location = get_setting_value('_location');
+  $site_description = get_setting_value('_site_description');
+  $youtube = get_setting_value('_youtube');
+  $twitter = get_setting_value('_twitter');
+  $instagram = get_setting_value('_instagram');
+  $facebook = get_setting_value('_facebook');
+
+  $jumbotron = get_section_data('JUMBOTRON');
+  $about = get_section_data('ABOUT');
+  // $partner = get_partner();
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +19,7 @@ $site_name = get_setting_value('_site_name')
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>{{ $site_name }}</title>
+    <title>{{ $sitename }}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
@@ -23,7 +34,7 @@ $site_name = get_setting_value('_site_name')
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
       <div class="container">
-        <a class="navbar-brand" href="#page-top">{{ $site_name }}</a>
+        <a class="navbar-brand" href="#page-top">{{ $sitename }}</a>
         <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
@@ -40,10 +51,11 @@ $site_name = get_setting_value('_site_name')
     <!-- Masthead-->
     <header class="masthead bg-primary text-white text-center">
       <div class="container d-flex align-items-center flex-column">
+        {{-- {{dd($jumbotron)}} --}}
         <!-- Masthead Avatar Image-->
-        <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..." />
+        <img class="masthead-avatar mb-5" src="{{ Storage::url($jumbotron->thumbnail) }}" alt="..." />
         <!-- Masthead Heading-->
-        <h1 class="masthead-heading text-uppercase mb-0">Start Bootstrap</h1>
+        <h1 class="masthead-heading text-uppercase mb-0">{{$jumbotron->title }}</h1>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
           <div class="divider-custom-line"></div>
@@ -51,7 +63,7 @@ $site_name = get_setting_value('_site_name')
           <div class="divider-custom-line"></div>
         </div>
         <!-- Masthead Subheading-->
-        <p class="masthead-subheading font-weight-light mb-0">Graphic Artist - Web Designer - Illustrator</p>
+        <p class="masthead-subheading font-weight-light mb-0">{!! $jumbotron->content ?? '' !!}</p>
       </div>
     </header>
     <!-- Partner Section-->
@@ -136,7 +148,7 @@ $site_name = get_setting_value('_site_name')
     </footer>
     <!-- Copyright Section-->
     <div class="copyright py-4 text-center text-white">
-      <div class="container"><small>Copyright &copy; {{ $site_name }} 2023</small></div>
+      <div class="container"><small>Copyright &copy; {{ $sitename }} 2023</small></div>
     </div>
     <!-- Partner Modals-->
     <!-- Partner Modal 1-->

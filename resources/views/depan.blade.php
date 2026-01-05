@@ -79,16 +79,25 @@ $sitename = get_setting_value('_sitename');
         </div>
         <!-- Partner Grid Items-->
         <div class="row justify-content-center">
-          <!-- Partner Item 1-->
+          @php
+              $i=1;
+          @endphp
+          @foreach ($partner as $item)
+          <!-- Partner Item {{$i}}-->
           <div class="col-md-6 col-lg-4 mb-5">
-            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal{{$i}}">
               <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
               </div>
-              <img class="img-fluid" src="assets/img/partner/cabin.png" alt="..." />
+              <img class="img-fluid" src="{{ Storage::url($item->thumbnail) }}" alt="..." />
             </div>
           </div>
-          <!-- last partner 1-->
+          <!-- last partner {{ $i }}-->
+          @php
+          $i++;
+          @endphp
+
+          @endforeach
         </div>
       </div>
     </section>
@@ -96,7 +105,7 @@ $sitename = get_setting_value('_sitename');
     <section class="page-section bg-primary text-white mb-0" id="about">
       <div class="container">
         <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">About</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-white">{{ $about->title }}</h2>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
           <div class="divider-custom-line"></div>
@@ -105,10 +114,9 @@ $sitename = get_setting_value('_sitename');
         </div>
         <!-- About Section Content-->
         <div class="row">
-          <div class="col-lg-3 ms-auto text-center"><img src="assets/img/about.png" class="w-75" /></div>
+          <div class="col-lg-3 ms-auto text-center"><img src="{{ Storage::url($about->thumbnail) }}" class="w-75" /></div>
           <div class="col-lg-5 me-auto lead">
-            <p>Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p>
-            <p>You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p>
+            {!! $about->content !!}
           </div>
         </div>
       </div>
@@ -121,25 +129,35 @@ $sitename = get_setting_value('_sitename');
           <div class="col-lg-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">Location</h4>
             <p class="lead mb-0">
-              2215 John Daniel Drive
-              <br />
-              Clark, MO 65243
+              {{ $location }}
             </p>
           </div>
           <!-- Footer Social Icons-->
           <div class="col-lg-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">Around the Web</h4>
-            <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-youtube"></i></a>
-            <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-instagram"></i></a>
-            <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
-            <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+
+            @if ($youtube)
+            <a class="btn btn-outline-light btn-social mx-1" href="{{ $youtube }}" target="blank"><i class="fab fa-fw fa-youtube"></i></a>
+            @endif
+            
+            @if ($instagram)
+            <a class="btn btn-outline-light btn-social mx-1" href="{{ $instagram }}" target="blank"><i class="fab fa-fw fa-instagram"></i></a>
+            @endif
+
+            @if ($twitter)
+            <a class="btn btn-outline-light btn-social mx-1" href="{{ $twitter }}" target="blank"><i class="fab fa-fw fa-twitter"></i></a>    
+            @endif    
+
+            @if ($facebook)
+            <a class="btn btn-outline-light btn-social mx-1" href="{{ $facebook }}" target="blank"  ><i class="fab fa-fw fa-facebook-f"></i></a>
+            @endif
+
           </div>
           <!-- Footer About Text-->
           <div class="col-lg-4">
-            <h4 class="text-uppercase mb-4">About Freelancer</h4>
+            <h4 class="text-uppercase mb-4">About Site</h4>
             <p class="lead mb-0">
-              Freelance is a free to use, MIT licensed Bootstrap theme created by
-              <a href="http://startbootstrap.com">Start Bootstrap</a>
+             {{ $site_description }}
               .
             </p>
           </div>
@@ -151,8 +169,14 @@ $sitename = get_setting_value('_sitename');
       <div class="container"><small>Copyright &copy; {{ $sitename }} 2023</small></div>
     </div>
     <!-- Partner Modals-->
+    @php
+      $i=1;
+    @endphp
+
+    @foreach ($partner as $item)
+        
     <!-- Partner Modal 1-->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="portfolioModal{{ $i }}" tabindex="-1" aria-labelledby="portfolioModal{{ $i }}" aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -161,7 +185,7 @@ $sitename = get_setting_value('_sitename');
               <div class="row justify-content-center">
                 <div class="col-lg-8">
                   <!-- Partner Modal - Title-->
-                  <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Log Cabin</h2>
+                  <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{ $item->title }}</h2>
                   <!-- Icon Divider-->
                   <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -169,9 +193,9 @@ $sitename = get_setting_value('_sitename');
                     <div class="divider-custom-line"></div>
                   </div>
                   <!-- Partner Modal - Image-->
-                  <img class="img-fluid rounded mb-5" src="assets/img/partner/cabin.png" alt="..." />
+                  <img class="img-fluid rounded mb-5" src="{{ Storage::url ($item->thumbnail) }}" alt="..." />
                   <!-- Partner Modal - Text-->
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                  {!! $item->content !!}
                   <button class="btn btn-primary" data-bs-dismiss="modal">
                     <i class="fas fa-xmark fa-fw"></i>
                     Close Window
@@ -183,6 +207,12 @@ $sitename = get_setting_value('_sitename');
         </div>
       </div>
     </div>
+
+    @php
+    $i++;
+    @endphp
+
+    @endforeach
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -41,7 +41,7 @@ $sitename = get_setting_value('_sitename');
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#partner">Partner</a></li>
+            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#partner">Hobby</a></li>
             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#profile">Profile</a></li>
           </ul>
@@ -70,7 +70,7 @@ $sitename = get_setting_value('_sitename');
     <section class="page-section portfolio" id="partner">
       <div class="container">
         <!-- Partner Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Partner</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Hobby</h2>
         <!-- Icon Divider-->
         <div class="divider-custom">
           <div class="divider-custom-line"></div>
@@ -134,7 +134,7 @@ $sitename = get_setting_value('_sitename');
           </div>
           <!-- Footer Social Icons-->
           <div class="col-lg-4 mb-5 mb-lg-0">
-            <h4 class="text-uppercase mb-4">Around the Web</h4>
+            <h4 class="text-uppercase mb-4">Media Social</h4>
 
             @if ($youtube)
             <a class="btn btn-outline-light btn-social mx-1" href="{{ $youtube }}" target="blank"><i class="fab fa-fw fa-youtube"></i></a>
@@ -157,8 +157,8 @@ $sitename = get_setting_value('_sitename');
           <div class="col-lg-4">
             <h4 class="text-uppercase mb-4">About Site</h4>
             <p class="lead mb-0">
-             {{ $site_description }}
-              .
+            {!! strip_tags($site_description) !!}
+              
             </p>
           </div>
         </div>
